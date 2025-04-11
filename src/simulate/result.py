@@ -17,5 +17,6 @@ def compare_result(ideal_result,noisy_result):
     print("Measurement outcomes 1 (Probability distribution)->")
     for outcome, prob in noisy_dist.items():
         print(f"{outcome}:{prob:.4f}")
-    
+
+
 
