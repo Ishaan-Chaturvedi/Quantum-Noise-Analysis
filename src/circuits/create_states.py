@@ -10,6 +10,7 @@ def bellstategenerator():
     bellqc = QuantumCircuit(2)
     bellqc.h(0)       
     bellqc.cx(0, 1)   
+    bellqc.measure_all()
     return bellqc
 
 
