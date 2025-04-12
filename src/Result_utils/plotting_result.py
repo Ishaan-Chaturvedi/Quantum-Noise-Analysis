@@ -2,10 +2,11 @@ from matplotlib.backends.backend_pdf import PdfPages
 from qiskit.visualization import plot_histogram,circuit_drawer
 import matplotlib.pyplot as plt
 
-def histogrammaker(result,key='meas'):
+def histogrammaker(result,key='meas',show=True):
     counts = getattr(result[0].data, key).get_counts()
     histdiag=plot_histogram(counts)
-    plt.show()
+    if show:
+      plt.show()
     return histdiag
 
 def circuitvis(circuit):
@@ -34,7 +35,7 @@ def generate_pdf_report(circuit,noise_model=None,result=None, filename='sim_resu
          pdf.savefig(fig)
          plt.close(fig)
        if result!=None:
-          fig2=histogrammaker(result)
+          fig2=histogrammaker(result,show=False)
           plt.title("Histogram of Counts")
           pdf.savefig(fig2)
           plt.close(fig2)

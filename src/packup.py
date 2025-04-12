@@ -1,5 +1,5 @@
 
-from circuits.create_states import bellstategenerator
+from circuits.create_states import bellstategenerator,ghzstategenerator,teleportationcircuit
 from channels.noisechannel import depolarizing_noise
 from circuits.apply_noise import applynoise
 from simulate.simulate import simulatenoise,simulateideal
@@ -9,12 +9,13 @@ from result_utils.plotting_result import generate_pdf_report
 from result_utils.plotting_result import circuitvis
 
 
-state=bellstategenerator()
+state=teleportationcircuit()
+#state=ghzstategenerator()
 noise_model=depolarizing_noise()
 alter_state,sim=applynoise(state,noise_model)
 result=simulatenoise(alter_state,sim)
 ideal_result=simulateideal(state)
-interpret_result(ideal_result)
+interpret_result(ideal_result,key='c')
 #histogrammaker(ideal_result)
-generate_pdf_report(state,result=result)
-#circuitvis(state)
+#generate_pdf_report(state,result=result)
+circuitvis(state)

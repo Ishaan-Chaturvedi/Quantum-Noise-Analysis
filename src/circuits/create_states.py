@@ -44,9 +44,10 @@ def teleportationcircuit():
     teleqc.h(0)
     #now for measurement part
     teleqc.measure([0,1],[0,1])
-    with teleqc.if_test((0,True)):
+    cbits=teleqc.clbits
+    with teleqc.if_test((cbits[0],True)):
         teleqc.x(2)
-    with teleqc.if_test((1,True)):
+    with teleqc.if_test((cbits[1],True)):
         teleqc.z(2)
     #information transfered
     teleqc.measure(2,2)

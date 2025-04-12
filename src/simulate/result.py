@@ -1,9 +1,9 @@
 from qiskit.quantum_info import state_fidelity
 
-def interpret_result(result):
+def interpret_result(result,key='meas'):
     #dist = result.counts[0]
     print("Measurement outcomes (Probability distribution)->")
-    print(result[0].data.meas.get_counts())
+    print(getattr(result[0].data, key).get_counts())
 
     
     #for outcome, prob in dist.items():
