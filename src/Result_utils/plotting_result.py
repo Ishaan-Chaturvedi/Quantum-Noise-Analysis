@@ -13,7 +13,7 @@ def circuitvis(circuit):
     circuit_drawer(circuit, output='mpl')
     plt.show()
 
-def generate_pdf_report(circuit,noise_model=None,result=None, filename='sim_result.pdf'):
+def generate_pdf_report(circuit,noise_model=None,result=None, key='meas',filename='sim_result.pdf'):
     """
     generate a pdf report of a sim with circuit diagram, noise model info and plots
     """
@@ -26,7 +26,6 @@ def generate_pdf_report(circuit,noise_model=None,result=None, filename='sim_resu
        plt.close(fig1)
        if noise_model!=None:
          noise_text="Noise Mode Info\n\n"
-         noise_text+=f"Basis_gates= {noise_model.basis_gates}"
          noise_text+=str(noise_model)
            # Standard A4 size
          ax.axis('off')  # Turn off axes for clean look
@@ -35,7 +34,7 @@ def generate_pdf_report(circuit,noise_model=None,result=None, filename='sim_resu
          pdf.savefig(fig)
          plt.close(fig)
        if result!=None:
-          fig2=histogrammaker(result,show=False)
+          fig2=histogrammaker(result,show=False,key=key)
           plt.title("Histogram of Counts")
           pdf.savefig(fig2)
           plt.close(fig2)
