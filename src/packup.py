@@ -4,7 +4,7 @@ from channels.noisechannel import depolarizing_noise
 from circuits.apply_noise import applynoise
 from simulate.simulate import simulatenoise,simulateideal
 from simulate.result import interpret_result
-from Plotting_fn.visualize import histogrammaker
+from Result_utils.visualize import histogrammaker
 
 
 state=bellstategenerator()
