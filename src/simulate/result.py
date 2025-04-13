@@ -1,31 +1,50 @@
 import numpy as np
+from qiskit.quantum_info import state_fidelity
 
-def interpret_result(result,key='meas',show=True):
-    #dist = result.counts[0]
+def interpret_result(result,prob=False,key='meas',show=True):
     
     try:
        counts = getattr(result[0].data, 'meas').get_counts()
     except:
        counts = getattr(result[0].data, 'c').get_counts()
-    if show:
-       print("Measurement outcomes (Probability distribution)->")
-       print(counts)
-    return counts
+
+    if prob:
+
+      total=sum(counts.values())
+      prob={k: v/total for k,v in counts.items()}
+      if show:
+          print("Measurement outcomes (Probability)->")
+          print(prob)
+
+      return prob
+    
+    else:
+       
+       if show:
+          print("Measurement outcomes (Counts)->")
+          print(counts)
+
+       return counts
 
     
     #for outcome, prob in dist.items():
       #print(f"{outcome}:{prob:.4f}")
 
 def measurement_fidelity(result1,result2):
-    counts1=interpret_result(result1,show=False)
-    counts2=interpret_result(result2,show=False) 
+    prob1=interpret_result(result1,prob=True,show=False)
+    prob2=interpret_result(result2,prob=True,show=False) 
     #need to normalize for prob
-    total1=sum(counts1.values())
-    total2=sum(counts2.values())
-    prob1={k: v/total1 for k,v in counts1.items()}
-    prob2={k: v/total2 for k,v in counts2.items()}
+    
     all_keys = set(prob1.keys()).union(prob2.keys())
     fidelity = sum(np.sqrt(prob1.get(k,0) * prob2.get(k,0)) for k in all_keys) ** 2
+    return fidelity
+
+def operator_fidelity(result1,result2):
+    rho = result1.data(0)['density_matrix']
+    sigma = result2.data(0)['density_matrix']
+    # Step 6: Compute quantum fidelity
+    fidelity = state_fidelity(rho, sigma)
+
     return fidelity
    
 

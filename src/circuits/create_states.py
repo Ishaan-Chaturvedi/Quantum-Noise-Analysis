@@ -11,7 +11,6 @@ def bellstategenerator():
     bellqc = QuantumCircuit(2)
     bellqc.h(0)       
     bellqc.cx(0, 1)   
-    bellqc.measure_all()
     return bellqc
 
 def ghzstategenerator(n=3):
@@ -27,7 +26,6 @@ def ghzstategenerator(n=3):
     ghzqc.h(0)
     for i in range(n-1):
         ghzqc.cx(i,i+1)
-    ghzqc.measure_all()
     return ghzqc
     
 def teleportationcircuit():
