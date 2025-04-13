@@ -1,6 +1,8 @@
-from matplotlib.backends.backend_pdf import PdfPages
+
 from qiskit.visualization import plot_histogram,circuit_drawer
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 def histogrammaker(result,show=True):
     try:
@@ -12,39 +14,43 @@ def histogrammaker(result,show=True):
       plt.show()
     return histdiag
 
-#def histcomp(result1,result2,)
 
-def circuitvis(circuit):
-    circuit_drawer(circuit, output='mpl')
-    plt.show()
+def histcomp(result1,result2,show=True):
+   try:
+       counts1 = getattr(result1[0].data, 'meas').get_counts()
+   except:
+       counts1 = getattr(result1[0].data, 'c').get_counts()
 
-def generate_pdf_report(circuit1,noise_model=None,result=None,filename='sim_result.pdf'):
-    """
-    generate a pdf report of a sim with circuit diagram, noise model info and plots
-    """
-    fig1=circuit_drawer(circuit1,output='mpl')
-    fig, ax = plt.subplots(figsize=(8, 2))
-    with PdfPages(filename) as pdf:
-     
-       plt.title("Quantum_Circuit")
-       pdf.savefig(fig1)
-       plt.close(fig1)
-       if noise_model!=None:
-         noise_text=str(noise_model)
-           # Standard A4 size
-         ax.axis('off')  # Turn off axes for clean look
-         ax.text(0.05, 0.95, noise_text, fontsize=12, va='top', wrap=True)
-         plt.title("Noise_info")
-         pdf.savefig(fig)
-         plt.close(fig)
-       if result!=None:
-          fig2=histogrammaker(result,show=False)
-          plt.title("Histogram of Counts")
-          pdf.savefig(fig2)
-          plt.close(fig2)
-          
-          
-        
-    print(f"report saved as {filename}")
+   try:
+       counts2 = getattr(result2[0].data, 'meas').get_counts()
+   except:
+       counts2 = getattr(result2[0].data, 'c').get_counts()
+
+   keys = sorted(set(counts1.keys()).union(counts2.keys()))
+   values1 = [counts1.get(k, 0) for k in keys]
+   values2 = [counts2.get(k, 0) for k in keys]
+
+   fig, ax = plt.subplots(figsize=(10, 6))
+   x = np.arange(len(keys))
+   width = 0.35
+   ax.bar(x - width/2, values1, width, label='Ideal', color='skyblue')
+   ax.bar(x + width/2, values2, width, label='Noisy', color='salmon')
+   ax.set_ylabel('Probability')
+   ax.set_xticks(x)
+   ax.set_xticklabels(keys)
+   ax.legend()
+   plt.tight_layout()
+   if show==True:
+      plt.show()
+   return fig
+
+   
+def circuitvis(circuit,show=True):
+    diag=circuit_drawer(circuit, output='mpl')
+    if show:
+       plt.show()
+    return diag
+
+
     
 
