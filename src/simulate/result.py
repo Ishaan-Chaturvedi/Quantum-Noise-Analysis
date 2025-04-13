@@ -3,7 +3,11 @@ from qiskit.quantum_info import state_fidelity
 def interpret_result(result,key='meas'):
     #dist = result.counts[0]
     print("Measurement outcomes (Probability distribution)->")
-    print(getattr(result[0].data, key).get_counts())
+    try:
+       counts = getattr(result[0].data, 'meas').get_counts()
+    except:
+       counts = getattr(result[0].data, 'c').get_counts()
+    print(counts)
 
     
     #for outcome, prob in dist.items():
