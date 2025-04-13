@@ -10,8 +10,8 @@ def generate_pdf_report(circuit,noise_model=None,filename='sim_result.pdf'):
     """
     generate a pdf report of a sim with circuit diagram, noise model info and plots
     """
-    qc1=circuit.copy()
-    fig1=circuitvis(qc1,show=False)
+   
+    fig1=circuitvis(circuit,show=False)
     fig, ax = plt.subplots(figsize=(8, 2))
     with PdfPages(filename) as pdf:
      

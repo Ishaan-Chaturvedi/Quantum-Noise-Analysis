@@ -17,13 +17,11 @@ def applysim(circuit,noisemodel=None,method='automatic',optimization_level=1):
     
     if method =='automatic':
          qc=circuit.copy()
-         qc.measure_all()
          simulator=AerSimulator(method=method,noise_model=noisemodel)
          transpiled_circuit = transpile(qc, backend=simulator,optimization_level=optimization_level)
          return transpiled_circuit,simulator
     else:
          qc=circuit.copy()
-         qc.measure_all()
          qc.save_density_matrix()
          simulator=AerSimulator(method=method,noise_model=noisemodel)
          transpiled_circuit = transpile(qc, backend=simulator,optimization_level=optimization_level)

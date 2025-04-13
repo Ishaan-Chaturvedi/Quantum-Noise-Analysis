@@ -8,14 +8,14 @@ from result_utils.pdfmaker import generate_pdf_report
 
 
 
-circuit=bellstategenerator()
+circuit=teleportationcircuit()
 #state=ghzstategenerator()
 noise_model=depolarizing_noise(p1=0.3,p2=0.2)
-noise_result=simulate_circuit(circuit,noisemodel=noise_model,method='density_matrix')
-ideal_result=simulate_circuit(circuit,method='density_matrix')
+#noise_result=simulate_circuit(circuit,noisemodel=noise_model,method='density_matrix')
+#ideal_result=simulate_circuit(circuit,method='density_matrix')
 #interpret_result(noise_result,prob=True,show=True)
-fid=operator_fidelity(ideal_result,noise_result)
-print(fid)
+#fid=operator_fidelity(ideal_result,noise_result)
+#print(fid)
 
 #interpret_result(ideal_result)
 #histcomp(ideal_result,noise_result)
