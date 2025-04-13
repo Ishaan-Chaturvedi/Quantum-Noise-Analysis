@@ -2,8 +2,7 @@
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 from .plotting_result import circuitvis,histcomp,histogrammaker
-from circuits.apply_noise import applynoise
-from simulate.simulate import simulatenoise,simulateideal
+from simulate.simulate import applysim,simulate_circuit
 
 
 
@@ -21,22 +20,24 @@ def generate_pdf_report(circuit,noise_model=None,filename='sim_result.pdf'):
 
        if noise_model!=None:
          
-         noise_text=str(noise_model)
+         
            # Standard A4 size
          ax.axis('off')  # Turn off axes for clean look
+         
+         noise_text=str(noise_model)
          ax.text(0.05, 0.95, noise_text, fontsize=12, va='top', wrap=True)
          plt.title("Noise_info")
          pdf.savefig(fig)
          plt.close(fig)
-         alter_state,sim=applynoise(circuit,noise_model)
-         noise_result=simulatenoise(alter_state,sim)
-         ideal_result=simulateideal(circuit)
+         
+         noise_result=simulate_circuit(circuit,noisemodel=noise_model)
+         ideal_result=simulate_circuit(circuit)
          fig2=histcomp(ideal_result,noise_result,show=False)
          plt.title("Histogram Comparison")
          pdf.savefig(fig2)
          plt.close(fig2)
        else:
-         ideal_result=simulateideal(circuit)
+         ideal_result=simulate_circuit(circuit)
          fig2=histogrammaker(ideal_result,show=False)
          plt.title("Histogram of Counts")
          pdf.savefig(fig2)

@@ -1,21 +1,24 @@
 
 from circuits.create_states import bellstategenerator,ghzstategenerator,teleportationcircuit
 from channels.noisechannel import depolarizing_noise,amplitude_damping,bit_flip
-from circuits.apply_noise import applynoise
-from simulate.simulate import simulatenoise,simulateideal
-from simulate.result import interpret_result
+from simulate.simulate import simulate_circuit
+from simulate.result import interpret_result, measurement_fidelity
 from result_utils.plotting_result import histogrammaker,circuit_drawer,histcomp
 from result_utils.pdfmaker import generate_pdf_report
 
 
 
-circuit=teleportationcircuit()
+circuit=bellstategenerator()
 #state=ghzstategenerator()
-noise_model=bit_flip()
-alter_state,sim=applynoise(circuit,noise_model)
-noise_result=simulatenoise(alter_state,sim)
-ideal_result=simulateideal(circuit)
+noise_model=depolarizing_noise(p1=0.3,p2=0.2)
+noise_result=simulate_circuit(circuit,noisemodel=noise_model)
+ideal_result=simulate_circuit(circuit)
+fid=measurement_fidelity(ideal_result,noise_result)
+print(fid)
+
 #interpret_result(ideal_result)
 #histcomp(ideal_result,noise_result)
-generate_pdf_report(circuit)
-#circuitvis(state)
+generate_pdf_report(circuit,noise_model)
+#circuitvis(stat
+
+

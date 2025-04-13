@@ -54,3 +54,8 @@ def circuitvis(circuit,show=True):
 
     
 
+
+
+
+    
+
