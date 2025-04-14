@@ -1,7 +1,7 @@
 from qiskit import QuantumCircuit
 
 
-def bellstategenerator(measure=True):
+def bellstategenerator():
     """
     Generates a 2-qubit Bell state circuit.
 
@@ -11,14 +11,10 @@ def bellstategenerator(measure=True):
     bellqc = QuantumCircuit(2)
     bellqc.h(0)       
     bellqc.cx(0, 1) 
-    if measure:  
-      bellqc.measure_all()
-      return bellqc
-    else:
-      return bellqc
+    return bellqc
     
 
-def ghzstategenerator(n=3,measure=True):
+def ghzstategenerator(n=3):
 
     """
     parameter:
@@ -31,14 +27,10 @@ def ghzstategenerator(n=3,measure=True):
     ghzqc.h(0)
     for i in range(n-1):
         ghzqc.cx(i,i+1)
-    if measure:  
-      ghzqc.measure_all()
-      return ghzqc
-    else:
-      return ghzqc
     return ghzqc
+   
     
-def teleportationcircuit(measure=True):
+def teleportationcircuit():
     """
     create quantum teleportation circuit
     returns:
@@ -58,11 +50,8 @@ def teleportationcircuit(measure=True):
     with teleqc.if_test((cbits[1],True)):
         teleqc.z(2)
     #information transfered
-    if measure:
-      teleqc.measure(2,2)
-      return teleqc
-    else:
-      return teleqc
+    return teleqc
+   
 
 
 

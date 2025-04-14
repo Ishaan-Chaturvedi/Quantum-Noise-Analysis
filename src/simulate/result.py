@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.linalg import sqrtm
-from qiskit.quantum_info import state_fidelity
+from qiskit.quantum_info import state_fidelity, entropy
 
 def interpret_result(result,prob=False,key='meas',show=True):
     
@@ -61,6 +61,14 @@ def operator_trace(result1,result2):
     sqrt_delta_dagger_delta = sqrtm(delta.conj().T @ delta)
     trace_norm = np.trace(sqrt_delta_dagger_delta).real
     return 0.5 * trace_norm
+
+def information_gain(result1, result2):
+     rho = result1.data(0)['density_matrix']
+     sigma = result2.data(0)['density_matrix']
+     info_gain=-entropy(sigma)+entropy(rho)
+     return info_gain
+
+   
 
 
 
