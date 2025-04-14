@@ -65,10 +65,38 @@ def operator_trace(result1,result2):
 def information_gain(result1, result2):
      rho = result1.data(0)['density_matrix']
      sigma = result2.data(0)['density_matrix']
-     info_gain=-entropy(sigma)+entropy(rho)
+     info_gain=entropy(sigma)-entropy(rho)
      return info_gain
 
-   
+def shannon_information_gain(result1,result2):
+    prob1=interpret_result(result1,prob=True,show=False)
+    prob2=interpret_result(result2,prob=True,show=False) 
+    entropy1= -sum(p1 * np.log2(p1) for p1 in prob1.values() if p1 > 0)
+    entropy2= -sum(p2 * np.log2(p2) for p2 in prob2.values() if p2 > 0)
+    info_gain=entropy2-entropy1
+    return info_gain
+
+
+
+def measresult(result1,result2,show=True):
+    str="The Measures of difference between ideal circuit and noisy circuit on the basis of measurement are-\n\n"
+    str+=f"1. Fidelity(between measurement probability distribution) is {measurement_fidelity(result1,result2):4f}\n"
+    str+=f"2. Trace Distance(probability distribution)={measurement_trace(result1,result2):.4f}\n"
+    str+=f"3. Information gain(change in shannon entropy from ideal to noisy circuit) is{shannon_information_gain(result1,result2):.4f}\n\n\n"
+    if show:
+        print(str)
+    else:
+        return str
+
+def operesult(result1,result2,show=True):
+    str="The Measures of difference between ideal circuit and noisy circuit (Density_matrix) are-\n\n"
+    str+=f"1. Fidelity(Density_Matrix) is {operator_fidelity(result1,result2):.4f}\n"
+    str+=f"2. Trace Distance(Density_matrix) is {operator_trace(result1,result2):.4f}\n"
+    str+=f"3. Information gain(change in von neumann entropy from ideal to noisy circuit) is {information_gain(result1,result2):.4f}\n\n"
+    if show:
+        print(str)
+    else:
+        return str
 
 
 
