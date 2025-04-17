@@ -54,8 +54,8 @@ This project is broken into the following phases:
 
 ```bash
 # Clone the repo
-git clone https://github.com/Ishaan-Chaturvedi/quantum-channel-lab.git
-cd quantum-channel-lab
+git clone https://github.com/Ishaan-Chaturvedi/quantum-noise-analysis.git
+cd quantum-noise-analysis
 
 # Install dependencies
 pip install -r requirements.txt
